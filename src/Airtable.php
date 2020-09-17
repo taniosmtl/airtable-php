@@ -81,37 +81,37 @@ class Airtable
         return new Request( $this, $content_type, $params, false, $relations );
 	}
 
-	function saveContent($content_type,$fields)
+	function saveContent($content_type,$fields,$typecast=false)
 	{
 
 	    if( ! $this->_detectBatch( $fields ) )
         {
-            $fields = array('fields' => $fields);
+            $data = array('fields' => $fields, 'typecast' => $typecast);
         }
 	    else
         {
-            $fields = array('records' => $fields);
+            $data = array('records' => $fields, 'typecast' => $typecast);
         }
 
-		$request = new Request( $this, $content_type, $fields, true );
+		$request = new Request( $this, $content_type, $data, true );
 
 		return $request->getResponse();
 
 	}
 
-	function updateContent($content_type,$fields)
+	function updateContent($content_type,$fields,$typecast=false)
 	{
 
         if( ! $this->_detectBatch( $fields ) )
         {
-            $fields = array('fields' => $fields);
+            $data = array('fields' => $fields, 'typecast' => $typecast);
         }
         else
         {
-            $fields = array('records' => $fields);
+            $data = array('records' => $fields, 'typecast' => $typecast);
         }
 
-		$request = new Request( $this, $content_type, $fields, 'patch' );
+		$request = new Request( $this, $content_type, $data, 'patch' );
 
 		return $request->getResponse();
 
